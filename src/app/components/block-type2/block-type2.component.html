@@ -1,0 +1,30 @@
+<span>{{err}}</span>
+<div class='wrapper'>
+  <div class='block'>
+    <div class='block-type'>
+      <h2>{{ service.blockType2.type}}</h2>
+      <button (click)='deleteBlock($event)'>Delete</button>
+    </div>
+    <form class='form' (submit)='addCheckbox()'>
+      <label for='title'>Title</label>
+      <br/>
+      <input type='text' name='title' class='title' [(ngModel)]='service.blockType2.title.value' />
+      <br />
+      <br />
+      <label for='description'>Accessibility</label>
+      <br/>
+      <div *ngFor="let checkbox of service.blockType2.description.options; let i = index ">
+          <input 
+            type='checkbox' 
+            class='checkbox' 
+            [(ngModel)]='service.blockType2.description.options[i].value' 
+            [name]='service.blockType2.description.options[i].title'
+          />
+          <label for="checkbox">{{service.blockType2.description.options[i].title}}</label>
+        </div>
+      </form>
+  </div>
+ <!--  <div (keyup)='updateFromComponent()' (focusout)='changeBlock()'>
+     <pre  contenteditable="true"  [innerHTML]='shadowblockType2 | json'></pre>
+  </div> -->
+</div>

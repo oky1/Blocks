@@ -1,0 +1,22 @@
+<div style='display: flex; flex-direction: row; align-items: flex-start;'>
+<div id='visual'>
+	<app-block-type1 id='block-1'> </app-block-type1>
+	<app-block-type2 id='block-2'> </app-block-type2>
+	<app-block-type3 id='block-3'> </app-block-type3>
+	<span #visual></span>
+	<div style='text-align: center' id='creator'>
+		<select #select (change)="addBlock(select.value)">
+   		  	<option *ngFor="let block of blocks" [value]='block'>Create {{block}}</option>
+    	</select>
+	</div>
+</div>
+
+<!-- <code-editor></code-editor> -->
+<div style='width: 40px; margin-left:20px; background-color: rgba(0,0,0,.9);' ></div>
+<div id='code-editor'>
+	<app-shadow-block1 class='block-1'></app-shadow-block1>
+	<app-shadow-block2 class='block-2'></app-shadow-block2>	
+	<app-shadow-block3 class='block-3'></app-shadow-block3>
+	<span #editor></span>
+</div>
+</div>

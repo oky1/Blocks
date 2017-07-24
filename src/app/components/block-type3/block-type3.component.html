@@ -1,0 +1,36 @@
+<span>{{err}}</span>
+<div class='wrapper'>
+  <div class='block'>
+    <div class='block-type'>
+      <h2>{{ service.blockType3.type}}</h2>
+      <button (click)='deleteBlock($event)'>Delete</button>
+    </div>
+    <form class='form' (submit)='addRadioButton()'>
+      <label for='title'>Title</label>
+      <br/>
+      <input type='text' name='title' class='title' [(ngModel)]='service.blockType3.title.value' />
+      <br />
+      <br />
+      <label for='description'>Accessibility</label>
+      <br/>
+      <div *ngFor="let radio of service.blockType3.description.options; let i = index ">
+          <input 
+            type='radio' 
+            class='radio' 
+            name="options" 
+            ng-control="options"
+            [value]='service.blockType3.description.options[i].value'
+            [(ngModel)]='service.blockType3.description.value'
+            [name]='service.blockType3.description.options[i].title'
+            (click)='service.blockType3.description.value = blockType3.description.options[i].value'
+          />
+          <label for="radio">{{service.blockType3.description.options[i].title}}</label>
+        </div>
+      </form>
+  </div>
+ <!--  <div (keyup)='updateFromComponent()' (focusout)='changeBlock()'>
+     <pre  contenteditable="true"  [innerHTML]='shadowblockType3 | json'></pre>
+  </div> -->
+</div>
+
+<!--  [(ngModel)]='blockType3.description.options[i].value'  -->
