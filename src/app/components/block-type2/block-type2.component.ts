@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, HostBinding } from '@angular/core';
 import { BlockType2Service } from '../../services/block-type2.service'
 
 @Component({
@@ -9,24 +9,21 @@ import { BlockType2Service } from '../../services/block-type2.service'
 })
 
 export class BlockType2Component {
- @Input() id: string;
- // shadowblockType2;
- // blockType2;
- // boxModel;
+ @Input() id: string ;
+ blockType2;
  err;
  
  //subscription
- boxModelChange;
+ boxModelChangeFromJson
  subscribeErr;
 
   constructor(private service: BlockType2Service) {
-    //this.blockType2 = this.service.blockType2
-    //this.shadowblockType2 = this.service.blockType2;
-    //this.boxModelChange = this.service.boxModelChange.subscribe((value) => { 
-    //    this.shadowblockType2 = value;
-    //});
+    this.blockType2 = this.service.blockType2;
+    this.boxModelChangeFromJson = this.service.boxModelChangeFromJson.subscribe((value) => {
+        this.blockType2 = value;
+    });
     this.subscribeErr = this.service.subscribeErr.subscribe((value) => {
-        this.err = this.service.err;
+        this.err = value;
     });
   }
 
@@ -36,7 +33,6 @@ export class BlockType2Component {
  
  updateFromComponent() {
     this.service.updateFromComponent(this.id);
-    // this.blockType2 = this.service.blockType2;
   }
 
   addCheckbox() {

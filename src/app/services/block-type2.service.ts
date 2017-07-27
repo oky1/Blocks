@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { blockType2 } from './all-blocks-model';
 
 @Injectable()
 export class BlockType2Service {
@@ -8,21 +10,14 @@ export class BlockType2Service {
  id;
 
  //subscribe
+ boxModelChangeFromJson: Subject<any> = new Subject<any>();
  boxModelChange: Subject<any> = new Subject<any>();
  subscribeErr: Subject<string> = new Subject<string>();
+ //firebase
+ blocks: FirebaseObjectObservable<any[]>;
 
-  constructor() { 
-   this.blockType2 = {
-      type: "blockType2",
-      title: {
-            key: "TextBox Label",
-            value: ""
-      },
-      description: {
-        key: "Checkbox Group Label",
-        options: []
-      }
-    }
+  constructor(private db: AngularFireDatabase) { 
+   this.blockType2 = blockType2;
     this.err = '';
    }
 
@@ -34,9 +29,8 @@ export class BlockType2Service {
     let parentEl = document.getElementsByClassName(id)[0];
     const html = parentEl.getElementsByTagName("pre")[0];
     let htmlInner = html.innerHTML;
-    this.tryParseJSON(htmlInner);
-    console.log(this.blockType2, id);
-   }
+    this.tryParseJSON(htmlInner, id);
+  }
 
   addCheckbox() {
     let iterator = this.blockType2.description.options.length;
@@ -46,13 +40,14 @@ export class BlockType2Service {
     this.blockType2.title.value = ''
   }
 
-  tryParseJSON(htmlInner) {
+  tryParseJSON(htmlInner, id) {
   	   try {
         let o = JSON.parse(htmlInner);
         if (o && typeof o === "object") {
-            this.blockType2 = JSON.parse(htmlInner);
-            this.err = '';
-            this.subscribeErr.next(this.err);
+           const toDb = this.db.object(`/blocks/${id}`);
+           toDb.set(JSON.parse(htmlInner));
+           this.err = '';
+           this.subscribeErr.next(this.err);
         }
     }
     catch (e) { 
@@ -62,7 +57,7 @@ export class BlockType2Service {
    };
 
   deleteBlock(id) {
-    document.getElementById(id).remove();
-    document.getElementsByClassName(id)[0].remove()
+    let items = this.db.object(`blocks/${id}`);
+    items.remove();
   }
 }

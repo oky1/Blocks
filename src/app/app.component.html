@@ -1,22 +1,26 @@
 <div style='display: flex; flex-direction: row; align-items: flex-start;'>
 <div id='visual'>
-	<app-block-type1 id='block-1'> </app-block-type1>
-	<app-block-type2 id='block-2'> </app-block-type2>
-	<app-block-type3 id='block-3'> </app-block-type3>
-	<span #visual></span>
+	<div *ngFor="let block of blocks | async">
+		<app-block-type1 *ngIf="(block.type == 'blockType1')" id={{block.$key}}> </app-block-type1>
+		<app-block-type2 *ngIf="(block.type == 'blockType2')" id={{block.$key}}> </app-block-type2>
+		<app-block-type3 *ngIf="(block.type == 'blockType3')" id={{block.$key}}> </app-block-type3>
+	</div>
+	
 	<div style='text-align: center' id='creator'>
-		<select #select (change)="addBlock(select.value)">
-   		  	<option *ngFor="let block of blocks" [value]='block'>Create {{block}}</option>
+		<select #select (change)="select.value">
+   		  	<option *ngFor="let item of selectBlocks" [value]='item'>Create {{item}}</option>
     	</select>
+    	<button (click)="addBlock(select.value)">Add Block</button>
 	</div>
 </div>
 
-<!-- <code-editor></code-editor> -->
 <div style='width: 40px; margin-left:20px; background-color: rgba(0,0,0,.9);' ></div>
 <div id='code-editor'>
-	<app-shadow-block1 class='block-1'></app-shadow-block1>
-	<app-shadow-block2 class='block-2'></app-shadow-block2>	
-	<app-shadow-block3 class='block-3'></app-shadow-block3>
-	<span #editor></span>
+	<div *ngFor="let block of blocks | async">
+		<app-shadow-block1 *ngIf="(block.type == 'blockType1')" class={{block.$key}} ></app-shadow-block1>
+		<app-shadow-block2 *ngIf="(block.type == 'blockType2')" class={{block.$key}} ></app-shadow-block2>
+		<app-shadow-block3 *ngIf="(block.type == 'blockType3')" class={{block.$key}} ></app-shadow-block3>
+	</div>
+	<!-- <span #editor></span> -->
 </div>
 </div>

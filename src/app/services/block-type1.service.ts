@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 
 @Injectable()
 export class BlockType1Service {
@@ -12,7 +13,7 @@ export class BlockType1Service {
  boxModelChange: Subject<any> = new Subject<any>();
  subscribeErr: Subject<string> = new Subject<string>();
 
-  constructor() { 
+  constructor(private db: AngularFireDatabase) { 
    this.blockType1 = {
       type: "blockType1",
       title: {
@@ -61,7 +62,7 @@ export class BlockType1Service {
    };
 
   deleteBlock(id) {
-    document.getElementById(id).remove();
-    document.getElementsByClassName(id)[0].remove()
+    let items = this.db.object(`blocks/${id}`);
+    items.remove();
   }
 }

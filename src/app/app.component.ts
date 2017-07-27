@@ -1,59 +1,43 @@
-import { Component, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
-import { BlockType1Component } from './components/block-type1/block-type1.component';
-import { BlockType2Component } from './components/block-type2/block-type2.component';
-import { BlockType3Component } from './components/block-type3/block-type3.component';
-import { ShadowBlock1Component } from './components/shadow-blocks/shadow-block1/shadow-block1.component'
-import { ShadowBlock2Component } from './components/shadow-blocks/shadow-block2/shadow-block2.component'
-import { ShadowBlock3Component } from './components/shadow-blocks/shadow-block3/shadow-block3.component'
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { AngularFireDatabase, FirebaseListObservable  } from 'angularfire2/database';
+import { AppService } from './services/app.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [ AppService ]
 })
 
 export class AppComponent {
-	blocks;
-	@ViewChild('visual', {read: ViewContainerRef}) visual;
-	@ViewChild('editor', {read: ViewContainerRef}) editor;
-	constructor(private resolver: ComponentFactoryResolver) {
-		this.blocks = [
-			'BlockType1', 
-			'BlockType2', 
-			'BlockType3'
-		]
+	selectBlocks;
+	//pureBlocks;
+	blocks: FirebaseListObservable<any[]>
+	constructor(
+		private db: AngularFireDatabase,
+		private appservice: AppService) {
+		this.selectBlocks = ['BlockType1', 'BlockType2', 'BlockType3'];
+		this.blocks = db.list('/blocks');
+		//this.pureBlocks = [];
+	}
+
+	ngOnInit() {
+	  //this.blocks.subscribe(item => {
+	  //	//console.log(item)
+	  //	//item.map(bl => {this.pureBlocks.push(bl)})
+	  //	item.map(bl => {this.pureBlocks.push(bl.$key)});
+	  //	console.log(this.pureBlocks)
+	  //})
+	  // this data in firebase
+	  //console.log(this.pureBlocks)
+	  //this.addBlock('BlockType1', 'block-1');
+	  //this.addBlock('BlockType2', 'block-2');
+	  //this.addBlock('BlockType3', 'block-3');
 	}
 
 	addBlock(block) {
-		let blockToCreate;
-		let shadowToCreate;
-		switch(block) {
-			case 'BlockType1':
-			blockToCreate = BlockType1Component;
-			shadowToCreate = ShadowBlock1Component
-			break;
-			case 'BlockType2':
-			blockToCreate = BlockType2Component;
-			shadowToCreate = ShadowBlock2Component
-			break;
-			case 'BlockType3':
-			blockToCreate = BlockType3Component;
-			shadowToCreate = ShadowBlock3Component
-			break;
-			default: 
-			blockToCreate = null;
-			shadowToCreate = null;
-		}
-		const blockFactory = this.resolver.resolveComponentFactory(blockToCreate);
-		const shadowFactory = this.resolver.resolveComponentFactory(shadowToCreate);
-		const blockFactoryRef = this.visual.createComponent(blockFactory);
-		const shadowFactoryRef = this.editor.createComponent(shadowFactory);
-		
-		let visual = document.getElementById('visual');
-		let iterator = visual.childElementCount - 1;
-		// this part fail
-		blockFactoryRef.instance.id = `block-${iterator}`;
-		shadowFactoryRef.instance.class = `block-${iterator}`;
+		let id = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+		this.appservice.toDb(block, id);
+		//this.create(block, id)
 	}
-	
 }

@@ -10,20 +10,18 @@ import { BlockType3Service } from '../../services/block-type3.service'
 
 export class BlockType3Component {
  @Input() id: string;
- shadowblockType3;
  blockType3;
- boxModel;
  err;
  
  //subscription
- boxModelChange;
+ boxModelChangeFromJson;
  subscribeErr;
 
   constructor(private service: BlockType3Service) {
-    this.blockType3 = this.service.blockType3
-    this.shadowblockType3 = this.service.blockType3;
-    this.boxModelChange = this.service.boxModelChange.subscribe((value) => { 
-        this.shadowblockType3 = value;
+   // alert(attrId) 
+   this.blockType3 = this.service.blockType3;
+   this.boxModelChangeFromJson = this.service.boxModelChangeFromJson.subscribe((value) => {
+        this.blockType3 = value;
     });
     this.subscribeErr = this.service.subscribeErr.subscribe((value) => {
         this.err = this.service.err;
@@ -36,7 +34,6 @@ export class BlockType3Component {
  
  updateFromComponent() {
     this.service.updateFromComponent(this.id);
-    this.blockType3 = this.service.blockType3;
   }
 
   addRadioButton() {
