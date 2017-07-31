@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DragulaModule } from 'ng2-dragula';
 //firebase
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -10,15 +11,14 @@ import { environment } from '../environments/environment';
 
 //components
 import { AppComponent } from './app.component';
-import { BlockType1Service } from './services/block-type1.service';
-import { BlockType2Service } from './services/block-type2.service';
-import { BlockType3Service } from './services/block-type3.service'
+import { BlockTypeService } from './services/block-type.service';
 import { BlockType1Component } from './components/block-type1/block-type1.component';
 import { BlockType2Component } from './components/block-type2/block-type2.component';
 import { BlockType3Component } from './components/block-type3/block-type3.component';
 import { ShadowBlock1Component } from './components/shadow-blocks/shadow-block1/shadow-block1.component';
 import { ShadowBlock2Component } from './components/shadow-blocks/shadow-block2/shadow-block2.component';
 import { ShadowBlock3Component } from './components/shadow-blocks/shadow-block3/shadow-block3.component';
+import { ObjReversePipe } from './filters/obj-reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import { ShadowBlock3Component } from './components/shadow-blocks/shadow-block3/
   	BlockType3Component, 
   	ShadowBlock1Component, 
   	ShadowBlock2Component, 
-  	ShadowBlock3Component
+  	ShadowBlock3Component, 
+    ObjReversePipe
   ], // Components
   entryComponents: [
     BlockType1Component,
@@ -40,11 +41,12 @@ import { ShadowBlock3Component } from './components/shadow-blocks/shadow-block3/
   ], // Dynamic created components
   imports: [
     BrowserModule, 
+    DragulaModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule 
   ], // Modules
-  providers: [BlockType1Service,  BlockType2Service, BlockType3Service], // service
+  providers: [BlockTypeService], // service
   bootstrap: [AppComponent]
 })
 export class AppModule { }

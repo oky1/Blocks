@@ -1,24 +1,22 @@
-{{id}}
+<!-- {{id}} -->
 <span>{{err}}</span>
-<div class='wrapper'>
+<div class='wrapper' 
+  (keyup)='updateFromBlock()'>
   <div class='block'>
     <div class='block-type'>
-      <h2>{{ service.blockType1.type}}</h2>
+      <h2>{{ block.type}}</h2>
       <button (click)='deleteBlock($event)'>Delete</button>
     </div>
-    <form class='form' (submit)='add()'>
-      <label for='title'>{{service.blockType1.title.key}}</label>
+    <form class='form'  >
+      <label for='title'>{{block.title.key}}</label>
       <br/>
-      <input type='text' name='title' [(ngModel)]='service.blockType1.title.value' />
+      <input type='text' name='title' [(ngModel)]='block.title.value' />
       <br />
       <br />
-      <label for='description'>{{service.blockType1.description.key}}</label>
+      <label for='description'>{{block.description.key}}</label>
       <br/>
-      <textarea type='text' name='description' [(ngModel)]='service.blockType1.description.value'>
+      <textarea type='text' name='description' [(ngModel)]='block.description.value'>
       </textarea>
     </form>
   </div>
-  <!-- <div (keyup)='updateFromComponent()' (focusout)='changeBlock()' [class]='id'>
-    <pre contenteditable="true" id='preJson' [innerHTML]='shadowblockType1 | json'></pre>
-  </div> -->
 </div>

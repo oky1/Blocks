@@ -42,6 +42,7 @@ form {
 	border: 0;
 	background-color: transparent; 
 	text-decoration: underline;
+	cursor: pointer;
 }
 
 .form label {
@@ -53,6 +54,12 @@ form {
 	height: 27px;
 	margin-top: 10px;
 	border-color: rgba(0,0,0, .15);
+}
+
+.save {	
+	z-index: 99;
+	top:30px!important; 
+	cursor:pointer;
 }
 
 .radio {

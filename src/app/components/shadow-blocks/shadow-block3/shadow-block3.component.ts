@@ -1,39 +1,43 @@
 import { Component, Input } from '@angular/core';
-import { BlockType3Service } from '../../../services/block-type3.service'
+import { BlockTypeService } from '../../../services/block-type.service';
 
 @Component({
   selector: 'app-shadow-block3',
-  // styleUrls: ['./shadow-block1.component.css'],
   template: `
-  	<div (keyup)='updateFromComponent()' (focusout)='changeBlock()' [class]='class'>
-    	<pre contenteditable="true" [innerHTML]='shadowblockType3 | json'></pre>
+    <div (keyup)='updateFromShadow()' (focusout)='updateShadowBlock()' [class]='class'>
+      <pre contenteditable="true" [innerHtml]='block | objReverse | json' ></pre>
     </div>
   `
 })
 export class ShadowBlock3Component {
  @Input() class: string;
- shadowblockType3;
+ @Input() block: Object;
  err;
   
- //subscription
- boxModelChange;
  subscribeErr;
+ toShadow;
+ switchId;
 
-  constructor(public service: BlockType3Service) {
-    this.shadowblockType3 = this.service.blockType3;
-    this.boxModelChange = this.service.boxModelChange.subscribe((value) => { 
-        this.shadowblockType3 = value;
+  constructor(public service: BlockTypeService) {
+    this.switchId =  this.service.switchId.subscribe((value) => {
+      this.switchId = value
+    });
+    this.toShadow = this.service.toShadow.subscribe((value) => { 
+        if(this.class === this.switchId) { 
+          this.block = value;
+          this.switchId = "";
+        } 
     });
     this.subscribeErr = this.service.subscribeErr.subscribe((value) => {
         this.err = this.service.err;
     });
   }
 
- changeBlock() {
-     this.service.changeBlock();
+ updateShadowBlock() {
+     this.service.updateShadowBlock(this.class);
   }
  
- updateFromComponent() {
-    this.service.updateFromComponent(this.class);
+ updateFromShadow() {
+    this.service.updateFromShadow(this.class);
    }
 }

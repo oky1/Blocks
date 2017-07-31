@@ -1,48 +1,57 @@
 import { Component, Input } from '@angular/core';
-import { BlockType3Service } from '../../services/block-type3.service'
+import { BlockTypeService } from '../../services/block-type.service'
 
 @Component({
   selector: 'app-block-type3',
   templateUrl: './block-type3.component.html',
   styleUrls: ['./block-type3.component.css'],
-  //providers: [BlockType3Service]
 })
 
 export class BlockType3Component {
- @Input() id: string;
- blockType3;
+ @Input() id: string ;
+ @Input() block: Object;
  err;
  
  //subscription
- boxModelChangeFromJson;
  subscribeErr;
+ toBlock;
+ switchId;
 
-  constructor(private service: BlockType3Service) {
-   // alert(attrId) 
-   this.blockType3 = this.service.blockType3;
-   this.boxModelChangeFromJson = this.service.boxModelChangeFromJson.subscribe((value) => {
-        this.blockType3 = value;
+  constructor(private service: BlockTypeService) {
+    this.switchId =  this.service.switchId.subscribe((value) => {
+      this.switchId = value
     });
+    this.toBlock = this.service.toBlock.subscribe((value) => {
+        if(this.id === this.switchId) {
+          this.block = value;
+        } this.switchId = "";
+    })
     this.subscribeErr = this.service.subscribeErr.subscribe((value) => {
         this.err = this.service.err;
     });
   }
 
-  changeBlock() {
-     this.service.changeBlock();
+  addType() {
+    event.preventDefault();
+    this.service.addType(this.block, this.id);
   }
  
- updateFromComponent() {
-    this.service.updateFromComponent(this.id);
+  updateFromBlock() {
+    this.service.updateFromBlock(this.block, this.id)
   }
 
-  addRadioButton() {
-    this.service.addRadioButton();
+  save() {
+    this.service.save(this.block, this.id)
   }
 
   deleteBlock() {
-   this.service.deleteBlock(this.id);
+    this.service.deleteBlock(this.id);
   }
-  
-
 }
+
+
+
+
+
+
+

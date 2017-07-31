@@ -18,7 +18,12 @@ export const blockType2 = {
     },
     description: {
       key: "Checkbox Group Label",
-      options: []
+      options: [
+        {
+          "title": "Checkbox 1 Label",
+          "value": false
+        }
+      ]
     }
   }
 
@@ -31,6 +36,11 @@ export const blockType3 = {
   description: {
     key: "RadioButton Group Label",
     value: 'rb1',
-    options: []
+    options: [
+        {
+          "title": "RadioButton 1 Label",
+          "value": 'rb1'
+        }
+    ]
   }
 }

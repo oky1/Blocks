@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BlockType1Service } from '../../services/block-type1.service'
+import { BlockTypeService } from '../../services/block-type.service'
 
 @Component({
   selector: 'app-block-type1',
@@ -9,33 +9,35 @@ import { BlockType1Service } from '../../services/block-type1.service'
 
 export class BlockType1Component {
  @Input() id: string;
- shadowblockType1;
+ @Input() block: Object;
  err;
   
  //subscription
- boxModelChange;
  subscribeErr;
+ toBlock;
+ switchId;
 
-  constructor(private service: BlockType1Service) {
+  constructor(private service: BlockTypeService) {
+    this.switchId =  this.service.switchId.subscribe((value) => {
+      this.switchId = value
+    });
+    this.toBlock = this.service.toBlock.subscribe((value) => {
+        if(this.id === this.switchId) {
+          this.block = value;
+          this.switchId = "";
+        } 
+    })
     this.subscribeErr = this.service.subscribeErr.subscribe((value) => {
         this.err = this.service.err;
     });
   }
 
-  add() {
-    this.service.add()
+  updateFromBlock() {
+    this.service.updateFromBlock(this.block, this.id)
   }
 
-  changeBlock() {
-    this.service.changeBlock();
-  }
- 
- updateFromComponent() {
-    this.service.updateFromComponent(this.id);
-  }
-
- deleteBlock() {
-   this.service.deleteBlock(this.id);
+  deleteBlock() {
+    this.service.deleteBlock(this.id);
   }
 }
 

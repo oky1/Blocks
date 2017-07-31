@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable  } from 'angularfire2/database';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { AppService } from './services/app.service';
 
 @Component({
@@ -9,35 +10,35 @@ import { AppService } from './services/app.service';
   providers: [ AppService ]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit{
 	selectBlocks;
-	//pureBlocks;
+	msg: string = '';
 	blocks: FirebaseListObservable<any[]>
 	constructor(
 		private db: AngularFireDatabase,
+		private dragula: DragulaService,
 		private appservice: AppService) {
 		this.selectBlocks = ['BlockType1', 'BlockType2', 'BlockType3'];
 		this.blocks = db.list('/blocks');
-		//this.pureBlocks = [];
+		this.msg = '';
 	}
 
 	ngOnInit() {
-	  //this.blocks.subscribe(item => {
-	  //	//console.log(item)
-	  //	//item.map(bl => {this.pureBlocks.push(bl)})
-	  //	item.map(bl => {this.pureBlocks.push(bl.$key)});
-	  //	console.log(this.pureBlocks)
-	  //})
-	  // this data in firebase
-	  //console.log(this.pureBlocks)
-	  //this.addBlock('BlockType1', 'block-1');
-	  //this.addBlock('BlockType2', 'block-2');
-	  //this.addBlock('BlockType3', 'block-3');
+	    this.dragula.drag
+	      .subscribe(value => {
+	        console.log(value)
+	      });
+	
+	    this.dragula.drop
+	      .subscribe(value => {
+	      	// this.blocks.push(value)
+	        console.log(value)
+	     });
 	}
+
 
 	addBlock(block) {
 		let id = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
 		this.appservice.toDb(block, id);
-		//this.create(block, id)
 	}
 }

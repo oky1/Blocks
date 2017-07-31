@@ -7,12 +7,11 @@ const { blockType1, blockType2, blockType3 } = blockTypes;
 
 @Injectable()
 export class AppService {
-  	//data: FirebaseListObservable<any[]>;
+  	data: FirebaseListObservable<any[]>;
   	blocks: FirebaseObjectObservable<any[]>;
 
 	  constructor(private db: AngularFireDatabase) { 
-	  	//this.data = db.list('/blocks');
-		this.blocks = db.object('/blocks');
+	  	this.blocks = db.object('/blocks');
 	}
 
 	toDb(block, id) {
