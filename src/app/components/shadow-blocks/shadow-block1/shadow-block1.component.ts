@@ -37,7 +37,7 @@ export class ShadowBlock1Component {
 
  updateShadowBlock() {
      this.service.updateShadowBlock(this.class);
-  }
+ }
  
  updateFromShadow() {
     this.service.updateFromShadow(this.class);

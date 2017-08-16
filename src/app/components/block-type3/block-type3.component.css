@@ -56,12 +56,6 @@ form {
 	border-color: rgba(0,0,0, .15);
 }
 
-.save {	
-	z-index: 99;
-	top:30px!important; 
-	cursor:pointer;
-}
-
 .radio {
 	 display:inline-block;
     vertical-align:middle;

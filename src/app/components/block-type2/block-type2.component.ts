@@ -10,7 +10,7 @@ import { BlockTypeService } from '../../services/block-type.service'
 export class BlockType2Component {
  @Input() id: string ;
  @Input() block: Object;
- err;
+ err: string;
  
  //subscription
  subscribeErr;

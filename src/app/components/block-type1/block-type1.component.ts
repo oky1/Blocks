@@ -10,7 +10,7 @@ import { BlockTypeService } from '../../services/block-type.service'
 export class BlockType1Component {
  @Input() id: string;
  @Input() block: Object;
- err;
+ err: string;
   
  //subscription
  subscribeErr;
@@ -34,6 +34,10 @@ export class BlockType1Component {
 
   updateFromBlock() {
     this.service.updateFromBlock(this.block, this.id)
+  }
+
+  save() {
+    this.service.save(this.block, this.id)
   }
 
   deleteBlock() {

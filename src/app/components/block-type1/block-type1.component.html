@@ -1,7 +1,7 @@
 <!-- {{id}} -->
 <span>{{err}}</span>
 <div class='wrapper' 
-  (keyup)='updateFromBlock()'>
+  (keyup)='updateFromBlock()' (focusout)='save()'>
   <div class='block'>
     <div class='block-type'>
       <h2>{{ block.type}}</h2>

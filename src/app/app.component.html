@@ -1,49 +1,31 @@
 <div style='display: flex; flex-direction: row; align-items: flex-start;'>
-<div id='visual' [dragula]='"bag-one"' [dragulaModel]='models'>
-	<div *ngFor="let block of blocks | async as models">
-		<app-block-type1 
-			*ngIf="(block.type == 'blockType1')" 
-			id={{block.$key}} 
-			[block]='block'> 
-		</app-block-type1>
-		<app-block-type2 
-			*ngIf="(block.type == 'blockType2')" 
-			id={{block.$key}} 
-			[block]='block'> 
-		</app-block-type2>
-		<app-block-type3 
-			*ngIf="(block.type == 'blockType3')"
-			id={{block.$key}} 
-			[block]='block'> 
-		</app-block-type3>
-	</div>
-	
-	<div style='text-align: center' id='creator'>
-		<select #select (change)="select.value">
-   		  	<option *ngFor="let item of selectBlocks" [value]='item'>Create {{item}}</option>
-    	</select>
-    	<button (click)="addBlock(select.value)">Add Block</button>
-	</div>
-</div>
-
-<div style='width: 40px; margin-left:20px; background-color: rgba(0,0,0,.9);' ></div>
-<div id='code-editor' >
-	<div *ngFor="let block of blocks | async">
-		<app-shadow-block1 
-			*ngIf="(block.type == 'blockType1')" 
-			class={{block.$key}} 
-			[block]='block'>
-		</app-shadow-block1>
-		<app-shadow-block2 
-			*ngIf="(block.type == 'blockType2')" 
-			class={{block.$key}} 
-			[block]='block'>
-		</app-shadow-block2>
-		<app-shadow-block3 
-			*ngIf="(block.type == 'blockType3')" 
-			class={{block.$key}} 
-			[block]='block'>
-		</app-shadow-block3>
-	</div>
-</div>
+  <div id='visual' [dragula]='"bag1"' [dragulaModel]='blocks'>
+    <div *ngFor="let block; of blocks">
+      <app-block-type1 *ngIf="(block.type == 'blockType1')" id={{block.$key}} [block]='block'>
+      </app-block-type1>
+      <app-block-type2 *ngIf="(block.type == 'blockType2')" id={{block.$key}} [block]='block'>
+      </app-block-type2>
+      <app-block-type3 *ngIf="(block.type == 'blockType3')" id={{block.$key}} [block]='block'>
+      </app-block-type3>
+    </div>
+    <div style='text-align: center' id='creator'>
+      <select #select (change)="select.value">
+        <option *ngFor="let item of selectBlocks" [value]='item'>Create {{item}}</option>
+      </select>
+      <button (click)="addBlock(select.value)">Add Block</button>
+    </div>
+  </div>
+  <div id='code-editor' #codeEditor>
+    <div id='row-counter'><span *ngFor='let num of rows'>{{num + 1}}</span></div>
+    <div [dragula]='"bag2"' [dragulaModel]='blocks' #codeEditor>
+      <div *ngFor="let block; of blocks;">
+        <app-shadow-block1 *ngIf="(block.type == 'blockType1')" class={{block.$key}} [block]='block'>
+        </app-shadow-block1>
+        <app-shadow-block2 *ngIf="(block.type == 'blockType2')" class={{block.$key}} [block]='block'>
+        </app-shadow-block2>
+        <app-shadow-block3 *ngIf="(block.type == 'blockType3')" class={{block.$key}} [block]='block'>
+        </app-shadow-block3>
+      </div>
+    </div>
+  </div>
 </div>

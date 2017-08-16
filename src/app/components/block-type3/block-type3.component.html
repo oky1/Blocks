@@ -2,11 +2,11 @@
 <span>{{err}}</span>
 <div class='wrapper'>
   <div class='block' 
-  (keyup)='updateFromBlock()' 
+    (keyup)='updateFromBlock()' 
+    (focusout)='save()' 
   >
     <div class='block-type'>
       <h2>{{block.type}}</h2>
-      <button (click)='save()' class='save'>Save</button>
       <button (click)='deleteBlock($event)'>Delete</button>
     </div>
     <form class='form' (submit)='addType($event)'>

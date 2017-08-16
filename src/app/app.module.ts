@@ -46,7 +46,7 @@ import { ObjReversePipe } from './filters/obj-reverse.pipe';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule 
   ], // Modules
-  providers: [BlockTypeService], // service
+  providers: [BlockTypeService], // services
   bootstrap: [AppComponent]
 })
 export class AppModule { }
